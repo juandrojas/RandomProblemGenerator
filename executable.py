@@ -18,7 +18,7 @@ def write_in_text(file, p):
 def write_in_tex(file, p):
 	file.write('\\item ' + p.tex + '\n')
 	file.write('\\begin{enumerate}[label = (\\alph*)]\n')
-	random.shuffle(p.opcionestex)
+	#random.shuffle(p.opcionestex)
 	file.write('\\item '+ p.opcionestex[0].valor + '\n')
 	file.write('\\item '+ p.opcionestex[1].valor + '\n')
 	file.write('\\item '+ p.opcionestex[2].valor + '\n')
@@ -28,7 +28,7 @@ def write_in_tex(file, p):
 def tex_preamble(file):
 	file.write('\\documentclass[11pt]{article}\n')
 	file.write('\\usepackage[utf8]{inputenc}\n')
-	file.write('\\usepackage[spanish]{babel}\n')
+	file.write('\\usepackage[spanish,es-nodecimaldot]{babel}\n')
 	file.write('\\usepackage{blindtext}\n')
 	file.write('\\usepackage{enumitem}\n')
 	file.write('\\begin{document}\n')
@@ -36,7 +36,7 @@ def tex_preamble(file):
 
 file = open('main.tex', 'w')
 tex_preamble(file)
-for i in range(1,3):
+for i in range(1,8):
 	write_in_tex(file, question.Pregunta(i))
 file.write('\\end{enumerate}\n')
 file.write('\\end{document}\n')
