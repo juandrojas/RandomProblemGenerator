@@ -36,7 +36,7 @@ def tex_preamble(file):
 
 file = open('main.tex', 'w')
 tex_preamble(file)
-for i in range(1,11):
+for i in range(1,13):
 	write_in_tex(file, question.Pregunta(i))
 file.write('\\end{enumerate}\n')
 file.write('\\end{document}\n')

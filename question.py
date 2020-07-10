@@ -37,6 +37,12 @@ class Tipo:
 		elif tipo == 10:
 			self.seccion = '4.5'
 			self.numero = '4.74d'
+		elif tipo == 11:
+			self.seccion = '4.5'
+			self.numero = '4.75'
+		elif tipo == 12:
+			self.seccion = '4.5'
+			self.numero = '4.80'
 
 
 class Respuesta:
@@ -151,11 +157,31 @@ class Pregunta:
 		elif tipo == 10:
 			mu = random.randint(50,75)
 			s = random.randint(25,35)
-			q = round(random.uniform(0.2, 0.3), 4)
+			q = random.randint(20,40)/100
 			n = random.randint(3,8)
 			self.tex = 'Se supone que las calificaciones de un examen están normalmente distribuidas con media de '+ str(mu) + ' y varianza de ' + str(s) + '. ¿Aproximadamente qué proporción de estudiantes tienen calificaciones de '+ str(n) + ' o más puntos arriba de la calificación que corta al ' + str(q*100) + '\\% más bajo?'
 			self.opcionestex.append(Respuesta('$' + str(round((1 - st.norm.cdf(st.norm.ppf(q, loc=mu, scale=s) + n, loc=mu, scale=s))*100, 4)) + '\\%$', True))
 			self.opcionestex.append(Respuesta('$' + str(round((st.norm.cdf(st.norm.ppf(q, loc=mu, scale=s) + n, loc=mu, scale=s))*100, 4)) + '\\%$', False))
 			self.opcionestex.append(Respuesta('$' + str(round((1 - st.norm.cdf(st.norm.ppf(q, loc=mu, scale=s) - n, loc=mu, scale=s))*100, 4)) + '\\%$', False))
 			self.opcionestex.append(Respuesta('$' + str(round((st.norm.cdf(st.norm.ppf(q, loc=mu, scale=s) - n, loc=mu, scale=s))*100, 4)) + '\\%$', False))
+		elif tipo == 11:
+			s = random.randint(2,8)/10
+			q = random.randint(1,5)/100
+			n = random.randint(5,10)
+			self.tex = 'Una máquina expendedora de bebidas gaseosas puede ser regulada para descargar un promedio de $\\mu$ onzas por vaso. Si las onzas están normalmente distribuidas con desviación estándar de ' + str(s) + ' onzas, determine los valores de $\\mu$ de modo que vasos de '+ str(n) +' onzas se sirvan sólo ' + str(q*100) + '\\% del tiempo.'
+			self.opcionestex.append(Respuesta(str(round(n - s*st.norm.ppf(1-q, loc=0, scale=1), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(n - s*st.norm.ppf(q, loc=0, scale=1), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(n - (s**2)*st.norm.ppf(1-q, loc=0, scale=1), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(n - (s**2)*st.norm.ppf(q, loc=0, scale=1), 4)), False))
+		elif tipo == 12:
+			n = random.randint(1,5)
+			m = random.randint(1,5)
+			self.tex = 'Suponga que $Y$ está normalmente distribuida con media $\\mu$ y desviación estándar $\\sigma$. Después de observar el valor de $Y$, un matemático construye un rectángulo con longitud $L = ' + str(n) + '|Y|$ y ancho $W = ' + str(m) + '|Y|$. Denote con $A$ el área del triángulo resultante. ¿Cuál es $E(A)$?'
+			self.opcionestex.append(Respuesta('$' + str((n*m/2)) + '(\\mu^2 + \\sigma^2)$', True))
+			self.opcionestex.append(Respuesta('$' + str((n*m)) + '(\\mu^2 + \\sigma^2)$', False))
+			self.opcionestex.append(Respuesta('$' + str(n*m/2) + '(\\mu^2 - \\sigma^2)$', False))
+			self.opcionestex.append(Respuesta('$' + str(n*m) + '(\\mu^2 - \\sigma^2)$', False))
+			
+
+			
 			
