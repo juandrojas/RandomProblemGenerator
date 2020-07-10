@@ -23,11 +23,21 @@ class Tipo:
 			self.seccion = '4.5'
 			self.numero = '4.62'
 		elif tipo == 6:
-			self.seccion = '4.6'
+			self.seccion = '4.5'
 			self.numero = '4.70'
 		elif tipo == 7:
-			self.seccion = '4.6'
+			self.seccion = '4.5'
 			self.numero = '4.71'
+		elif tipo == 8:
+			self.seccion = '4.5'
+			self.numero = '4.73b'
+		elif tipo == 9:
+			self.seccion = '4.5'
+			self.numero = '4.74c'
+		elif tipo == 10:
+			self.seccion = '4.5'
+			self.numero = '4.74d'
+
 
 class Respuesta:
 	"""docstring for Respuesta"""
@@ -98,28 +108,54 @@ class Pregunta:
 			self.opcionestex.append(Respuesta('$' + str(round(st.norm.cdf(1/a), 4)) + '$', False))
 			self.opcionestex.append(Respuesta('$' + str(round(1 -st.norm.cdf(1/a), 4)) + '$', False))
 		elif tipo == 6:
-			a =2 +random.randint(1,10)/10
-			b =random.randint(1,10)/10
-			n = random.randint(2,5)
+			a = 2.5 +random.randint(1,4)/10
+			b = random.randint(3,6)/10
+			n = random.randint(2,4)
 			self.tex = 'Los promedios de calificaciones (GPA, por sus siglas en inglés) de una gran población de estudiantes universitarios están normalmente distribuidos en forma aproximada, con media de ' + str(a) + ' y desviación estándar '+ str(b) +'. Suponga que se escogen ' + num2words(n, lang='es') + ' estudiantes al azar del alumnado. ¿Cuál es la probabilidad de que los ' + num2words(n, lang='es') + ' estudiantes escogidos alcancen un GPA de más de 3.0?'
-			self.opcionestex.append(Respuesta('$' + str(round(st.norm.cdf(3, loc=a, scale = b)**n, 4)) + '$', True))
+			self.opcionestex.append(Respuesta('$' + str(round(1 - st.norm.cdf(3, loc=a, scale = b)**n, 4)) + '$', True))
+			self.opcionestex.append(Respuesta('$' + str(round(st.norm.cdf(3, loc=a, scale = b)**n, 4)) + '$', False))
 			self.opcionestex.append(Respuesta('$' + str(round(st.norm.cdf(3, loc=a, scale = b), 4)) + '$', False))
 			self.opcionestex.append(Respuesta('$' + str(round(1 - st.norm.cdf(3, loc=a, scale = b), 4)) + '$', False))
-			self.opcionestex.append(Respuesta('$' + str(round(1 - st.norm.cdf(3, loc=a, scale = b)**n, 4)) + '$', False))
 		elif tipo == 7:
 			a_ = random.randint(10,20)
 			b_ = random.randint(2,5)
 			m_ = random.randint(a_ +1 , a_+b_ - 1)
-			a = a_/100
-			b = b_/100
-			m = m_/100
-			s = random.randint(5,9)/1000
-			n = random.randint(2,5)
-			self.tex = 'Se especifica que los cables manufacturados para usarse en un sistema de computadora deben tener resistencias entre ' + str(a) + ' y ' + str(a +b) + ' ohms. Las resistencias medidas reales de los cables producidos por la compañía $A$ tienen una distribución de probabilidad normal con media de ' + str(m) +' ohms y desviación estándar ' + str(s) + ' ohm. Si ' + num2words(n, lang='esp') + ' de los cables se usan en el sistema de computadora y todos son seleccionados de la compañia $A$, ¿cuál es la probabilidad de que los ' + num2words(n, lang='esp') + ' en un sistema seleccionado al azar satisfagan las especificaciones?'
-			self.opcionestex.append(Respuesta('$' + str(round((st.norm.cdf(a, loc=m, scale=s) - st.norm.cdf(b, loc=m, scale=s))**n, 6)) + '$', True))
-			self.opcionestex.append(Respuesta('$' + str(round((st.norm.cdf(a, loc=m, scale=s) - st.norm.cdf(b, loc=m, scale=s)), 6)) + '$', False))
-			self.opcionestex.append(Respuesta('$' + str(round(1 -(st.norm.cdf(a, loc=m, scale=s) - st.norm.cdf(b, loc=m, scale=s))**n, 6)) + '$', False))
-			self.opcionestex.append(Respuesta('$' + str(round(1 -(st.norm.cdf(a, loc=m, scale=s) - st.norm.cdf(b, loc=m, scale=s)), 6)) + '$', False))
+			a = round(a_/100, 4)
+			b = round(b_/100, 4)
+			m = round(m_/100, 4)
+			s = random.randint(5,9)/100
+			n = random.randint(2,4)
+			self.tex = 'Se especifica que los cables manufacturados para usarse en un sistema de computadora deben tener resistencias entre ' + str(a) + ' y ' + str(round(a +b, 2)) + ' ohms. Las resistencias medidas reales de los cables producidos por la compañía $A$ tienen una distribución de probabilidad normal con media de ' + str(m) +' ohms y desviación estándar ' + str(s) + ' ohm. Si ' + num2words(n, lang='esp') + ' de los cables se usan en el sistema de computadora y todos son seleccionados de la compañia $A$, ¿cuál es la probabilidad de que los ' + num2words(n, lang='esp') + ' en un sistema seleccionado al azar satisfagan las especificaciones?'
+			self.opcionestex.append(Respuesta('$' + str(round((st.norm.cdf(a, loc=m, scale=s) - st.norm.cdf(b, loc=m, scale=s))**n, 4)) + '$', True))
+			self.opcionestex.append(Respuesta('$' + str(round((st.norm.cdf(a, loc=m, scale=s) - st.norm.cdf(b, loc=m, scale=s)), 4)) + '$', False))
+			self.opcionestex.append(Respuesta('$' + str(round(1 -(st.norm.cdf(a, loc=m, scale=s) - st.norm.cdf(b, loc=m, scale=s))**n, 4)) + '$', False))
+			self.opcionestex.append(Respuesta('$' + str(round(1 -(st.norm.cdf(a, loc=m, scale=s) - st.norm.cdf(b, loc=m, scale=s)), 4)) + '$', False))
+		elif tipo == 8:
+			mu = 900 + random.randint(1,10)*10
+			s = random.randint(10,20)
+			q = round(random.random(), 4)
+			self.tex = 'El ancho de rollos de tela está normalmente distribuido con media de ' + str(mu) + ' mm (milímimetros) y desviación estándar de ' + str(s) + ' mm. ¿Cuál es el valor apropiado para $C$ de manera que un rollo seleccionado al azar tenga un ancho menor que $C$ con probabilidad  ' + str(q) + '?'
+			self.opcionestex.append(Respuesta('$' + str(round(st.norm.ppf(q, loc = mu, scale = s), 4)) + '$', True))
+			self.opcionestex.append(Respuesta('$' + str(round(st.norm.ppf(1-q, loc = mu, scale = s), 4)) + '$', False))
+			self.opcionestex.append(Respuesta('$' + str(round(mu + st.norm.ppf(1-q, loc = 0, scale = 1), 4)) + '$', False))
+			self.opcionestex.append(Respuesta('$' + str(round(mu + st.norm.ppf(q, loc = 0, scale = 1), 4)) + '$', False))
+		elif tipo == 9:
+			mu = random.randint(50,75)
+			s = random.randint(25,35)
+			q = round(random.uniform(0.2, 0.4), 4)
+			self.tex = 'Se supone que las calificaciones de un examen están normalmente distribuidas con media de '+ str(mu) + ' y varianza de ' + str(s) + '. ¿Cuál es el punto límite para pasar el examen si el examinador desea pasar sólo al ' + str(q*100) + '\\% de todas las calificaciones?' 
+			self.opcionestex.append(Respuesta('$' + str(round(st.norm.ppf(1-q, loc=mu, scale=s), 4)) + '$', True))
+			self.opcionestex.append(Respuesta('$' + str(round(st.norm.ppf(q, loc=mu, scale=s), 4)) + '$', False))
+			self.opcionestex.append(Respuesta('$' + str(60) + '$', False))
+			self.opcionestex.append(Respuesta('$' + str(round(60 + st.norm.ppf(1-q, loc=0, scale=1), 4)) + '$', False))
+		elif tipo == 10:
+			mu = random.randint(50,75)
+			s = random.randint(25,35)
+			q = round(random.uniform(0.2, 0.3), 4)
+			n = random.randint(3,8)
+			self.tex = 'Se supone que las calificaciones de un examen están normalmente distribuidas con media de '+ str(mu) + ' y varianza de ' + str(s) + '. ¿Aproximadamente qué proporción de estudiantes tienen calificaciones de '+ str(n) + ' o más puntos arriba de la calificación que corta al ' + str(q*100) + '\\% más bajo?'
+			self.opcionestex.append(Respuesta('$' + str(round((1 - st.norm.cdf(st.norm.ppf(q, loc=mu, scale=s) + n, loc=mu, scale=s))*100, 4)) + '\\%$', True))
+			self.opcionestex.append(Respuesta('$' + str(round((st.norm.cdf(st.norm.ppf(q, loc=mu, scale=s) + n, loc=mu, scale=s))*100, 4)) + '\\%$', False))
+			self.opcionestex.append(Respuesta('$' + str(round((1 - st.norm.cdf(st.norm.ppf(q, loc=mu, scale=s) - n, loc=mu, scale=s))*100, 4)) + '\\%$', False))
+			self.opcionestex.append(Respuesta('$' + str(round((st.norm.cdf(st.norm.ppf(q, loc=mu, scale=s) - n, loc=mu, scale=s))*100, 4)) + '\\%$', False))
 			
-			
-
