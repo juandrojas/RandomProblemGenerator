@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import random
 import scipy.stats as st
+import numpy as np
 from num2words import num2words
 class Tipo:
 	"""docstring for Tipo"""
@@ -43,7 +44,18 @@ class Tipo:
 		elif tipo == 12:
 			self.seccion = '4.5'
 			self.numero = '4.80'
-
+		elif tipo == 13:
+			self.seccion = '4.6'
+			self.numero = '4.89'
+		elif tipo == 14:
+			self.seccion = '4.6'
+			self.numero = '4.90'
+		elif tipo == 15:
+			self.seccion = '4.6'
+			self.numero = '4.92'
+		elif tipo == 16:
+			self.seccion = '4.6'
+			self.numero = '4.93'
 
 class Respuesta:
 	"""docstring for Respuesta"""
@@ -181,7 +193,39 @@ class Pregunta:
 			self.opcionestex.append(Respuesta('$' + str((n*m)) + '(\\mu^2 + \\sigma^2)$', False))
 			self.opcionestex.append(Respuesta('$' + str(n*m/2) + '(\\mu^2 - \\sigma^2)$', False))
 			self.opcionestex.append(Respuesta('$' + str(n*m) + '(\\mu^2 - \\sigma^2)$', False))
-			
-
-			
+		elif tipo == 13:
+			q = round(random.uniform(0.01, 0.1), 4)
+			n = random.randint(2,5)
+			self.tex = 'Si $Y$ tiene tiene una distribución exponencial y $P(Y > ' + str(n) + ') = ' + str(q) + '$, ¿cuál es $\\beta = E(Y)$?'
+			self.opcionestex.append(Respuesta(str(round(-n/np.log(q), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(-n/np.log(1-q), 4)), False))
+			self.opcionestex.append(Respuesta(str(n), False))
+			self.opcionestex.append(Respuesta(str(round(1/n, 4)), False))
+		elif tipo == 14:
+			a = random.randint(20,30)/10
+			b = random.randint(45,60)/10
+			n = random.randint(7,12)
+			self.tex = 'La magnitud de los temblores registrados en una región de América del norte puede modelarse como si tuviera una distribución exponencial con media de ' + str(a) + ', según se mide en la escala de Richter. De los siguientes ' + num2words(n, lang='es') + ' temblores que afecten esta región, ¿cuál es la probabilidad de que al menos uno de ellos sea mayor que ' + str(b) + ' en la escala de Richter?'
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(b, loc=0, scale=a)**n, 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(b, loc=0, scale=a)**n, 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(b, loc=0, scale=a), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(b, loc=0, scale=a)*st.expon.cdf(b, loc=0, scale=a)*n*(1 - st.expon.cdf(b, loc=0, scale=a)), 4)), False))
+		elif tipo == 15:
+			n = random.randint(5,15)
+			a = random.randint(80,120)
+			b = random.randint(25,50)
+			c = random.randint(2,5)
+			self.tex = 'El tiempo $Y$ necesario para completar una operación clave en la construcción de casas tiene una distribución exponencial con media de ' + str(n) + ' horas. La fórmula $C = ' + str(a) +' + ' +  str(b) + 'Y + ' + str(c) + 'Y^2$ relaciona el costo $C$ de completar esta operación con el cuadrado del tiempo para completarla. Encuentre la media de $C$.'
+			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + c*st.expon.moment(2, loc=0, scale=n), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + c*st.expon.var(loc=0, scale=n), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + c*st.expon.mean(loc=0, scale=n)**2, 4)), False))
+			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + (c**2)*st.expon.var(loc=0, scale=n), 4)), False))
+		elif tipo == 16:
+			n = random.randint(30,50)
+			m = random.randint(1,25)
+			self.tex ='Una evidencia histórica indica que los tiempos entre accidentes mortales en vuelos nacionales de horario programado en aviones de pasajeros en Estados Unidos tienen una distribución aproximadamente exponencial. Suponga que el tiempo medio entre accidentes es de ' + str(n) + ' días. Si el primero de los accidentes del mes de julio ocurrió el día ' + str(m) + ' de un año seleccionado al azar en el periodo de estudio, ¿cuál es la probabilidad de que ocurra otro accidente ese mismo mes?'
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(31-m, loc=0, scale=n), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(31, loc=0, scale=n), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(31-m, loc=0, scale=n), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(31, loc=0, scale=n), 4)), False))
 			
