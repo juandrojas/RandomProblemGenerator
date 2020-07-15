@@ -56,6 +56,15 @@ class Tipo:
 		elif tipo == 16:
 			self.seccion = '4.6'
 			self.numero = '4.93'
+		elif tipo == 17:
+			self.seccion = '4.6'
+			self.numero = '4.98'
+		elif tipo == 18:
+			self.seccion = '4.6'
+			self.numero = '4.103'
+		elif tipo == 19:
+			self.seccion = '4.6'
+			self.numero = '4.109'
 
 class Respuesta:
 	"""docstring for Respuesta"""
@@ -209,7 +218,7 @@ class Pregunta:
 			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(b, loc=0, scale=a)**n, 4)), True))
 			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(b, loc=0, scale=a)**n, 4)), False))
 			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(b, loc=0, scale=a), 4)), False))
-			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(b, loc=0, scale=a)*st.expon.cdf(b, loc=0, scale=a)*n*(1 - st.expon.cdf(b, loc=0, scale=a)), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(n*(1 - st.expon.cdf(b, loc=0, scale=a))*st.expon.cdf(b, loc=0, scale=a)**7, 4)), False))
 		elif tipo == 15:
 			n = random.randint(5,15)
 			a = random.randint(80,120)
@@ -222,10 +231,38 @@ class Pregunta:
 			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + (c**2)*st.expon.var(loc=0, scale=n), 4)), False))
 		elif tipo == 16:
 			n = random.randint(30,50)
-			m = random.randint(1,25)
+			m = random.randint(2,25)
 			self.tex ='Una evidencia histórica indica que los tiempos entre accidentes mortales en vuelos nacionales de horario programado en aviones de pasajeros en Estados Unidos tienen una distribución aproximadamente exponencial. Suponga que el tiempo medio entre accidentes es de ' + str(n) + ' días. Si el primero de los accidentes del mes de julio ocurrió el día ' + str(m) + ' de un año seleccionado al azar en el periodo de estudio, ¿cuál es la probabilidad de que ocurra otro accidente ese mismo mes?'
-			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(31-m, loc=0, scale=n), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(31-m+1, loc=0, scale=n), 4)), True))
 			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(31, loc=0, scale=n), 4)), False))
-			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(31-m, loc=0, scale=n), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(31-m+1, loc=0, scale=n), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(31, loc=0, scale=n), 4)), False))
+		elif tipo == 17:
+			b = random.randint(2,7)
+			q = random.randint(1,10)/100
+			self.tex = 'Una planta de manufactura utiliza un producto específico a granel. La cantidad de producto empleada en un día puede ser modelada por una distribución exponencial con $\\beta = ' + str(b) + '$ (medida en toneladas). ¿Cuánto producto a granel debe tener en existencia para que la probabilidad de que se agote el producto en la planta sea de solo ' + str(q) + '?'
+			self.opcionestex.append(Respuesta(str(round(st.expon.ppf(1-q, loc=0, scale=b), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.expon.ppf(q, loc=0, scale=b), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.expon.ppf(1-q, loc=0, scale=1), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.expon.ppf(q, loc=0, scale=1), 4)), False))
+		elif tipo == 18:
+			b = random.randint(5,15)
+			self.tex = 'Materiales explosivos que se usan en operaciones de minería producen cráteres casi circulares cuando se hacen denotar. Los radios de estos cráteres están distribuidos exponencialmente con media de ' + str(b) + ' pies. Encuentre la varianza del área producida por estos materiales explosivos.'
+			self.opcionestex.append(Respuesta('$' + str(int(st.expon.moment(4, loc=0, scale=b) - st.expon.moment(2, loc=0, scale=b)**2)) + '\\pi^2 $', True))
+			self.opcionestex.append(Respuesta('$' + str(int(st.expon.moment(4, loc=0, scale=b) - st.expon.moment(1, loc=0, scale=b)**4)) + '\\pi^2 $', False))
+			self.opcionestex.append(Respuesta('$' + str(int(st.expon.var(loc=0, scale=b)**4)) + '\\pi^2 $', False))
+			self.opcionestex.append(Respuesta('$' + str(int(st.expon.moment(4, loc=0, scale=b) + st.expon.moment(2, loc=0, scale=b)**2)) + '\\pi^2 $', False))
+		elif tipo == 19:
+			a = random.randint(1,5)
+			b = random.randint(1,5)
+			s = random.randint(25,50)
+			t = random.randint(2,5)
+			self.tex = 'El tiempo improductivo por semana $Y$ (en horas) de una máquina industrial tiene aproximadamente una distribución gamma con $\\alpha = ' + str(a) + ' $ y $\\beta = ' + str(b) + ' $. La pérdida $L$ (en dólares) para la operación industrial como resultado de este tiempo improductivo está dada por $L = ' + str(s) + 'Y + ' + str(t) + 'Y^2$. Encuentre la varianza de $L$.'  
+			self.opcionestex.append(Respuesta(str(int((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(2, a, loc=0, scale=b)**2) + 2*s*t*(st.gamma.moment(3, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)*st.gamma.moment(2, a, loc=0, scale=b)))), True))
+			self.opcionestex.append(Respuesta(str(int((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(2, a, loc=0, scale=b)**2))), False))
+			self.opcionestex.append(Respuesta(str(int((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(2, a, loc=0, scale=b)**2) + 2*s*t*(st.gamma.moment(3, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)**3))), False))
+			self.opcionestex.append(Respuesta(str(int((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)**4) + 2*s*t*(st.gamma.moment(3, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)**3))), False))
+			
+
+			
 			
