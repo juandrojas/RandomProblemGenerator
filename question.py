@@ -65,6 +65,18 @@ class Tipo:
 		elif tipo == 19:
 			self.seccion = '4.6'
 			self.numero = '4.109'
+		elif tipo == 20:
+			self.seccion = '4.7'
+			self.numero = '4.123'
+		elif tipo == 21:
+			self.seccion = '4.7'
+			self.numero = '4.124'
+		elif tipo == 22:
+			self.seccion = '4.7'
+			self.numero = '4.128'
+		elif tipo == 23:
+			self.seccion = '4.7'
+			self.numero = '4.129'
 
 class Respuesta:
 	"""docstring for Respuesta"""
@@ -262,6 +274,44 @@ class Pregunta:
 			self.opcionestex.append(Respuesta(str(int((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(2, a, loc=0, scale=b)**2))), False))
 			self.opcionestex.append(Respuesta(str(int((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(2, a, loc=0, scale=b)**2) + 2*s*t*(st.gamma.moment(3, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)**3))), False))
 			self.opcionestex.append(Respuesta(str(int((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)**4) + 2*s*t*(st.gamma.moment(3, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)**3))), False))
+		elif tipo == 20:
+			a = random.randint(2,5)
+			b = random.randint(2,5)
+			self.tex = 'La humedad relativa $Y$, cuando se mide en una localidad, tiene una función de densidad de probabilidad dada por la siguiente expresión. Encuentre el valor de $k$ que hace a $f(y)$ una función de densidad. $$ f(y)=\\begin{cases} k y^' + str(a) + '(1-y)^' + str(b) + ', & 0 \\leq y \\leq 1, \\\\ 0, & \\text{ en cualquier otro punto.}\\end{cases}$$'
+			self.opcionestex.append(Respuesta(str(round(np.math.factorial(a+b+1)/(np.math.factorial(a)*np.math.factorial(b)), 4)), True))
+			self.opcionestex.append(Respuesta(str(round((np.math.factorial(a)*np.math.factorial(b))/np.math.factorial(a+b+1), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(np.math.factorial(a+b+2)/(np.math.factorial(a+1)*np.math.factorial(b+1)), 4)), False))
+			self.opcionestex.append(Respuesta(str(round((np.math.factorial(a+1)*np.math.factorial(b+1))/np.math.factorial(a+b+2), 4)), False))
+		elif tipo == 21:
+			q = random.randint(4,12)*5/100
+			a = random.randint(2,5)
+			b = random.randint(2,5)
+			self.tex = 'El porcentaje de impurezas por lote en un producto químico es una variable aleatoria $Y$ con función de densidad $f(y)$ como se muestra abajo. Se sabe que un lote con más de ' + str(q*100) + '\\% de impurezas no se puede vender. Determine la probabilidad de que un lote seleccionado al azar no se pueda vender por exceso de impurezas. $$ f(y)=\\begin{cases} ' + str(int(np.math.factorial(a+b+1)/(np.math.factorial(a)*np.math.factorial(b)))) + 'y^' + str(a) + '(1-y)^' + str(b) + ', & 0 \\leq y \\leq 1, \\\\ 0, & \\text{ en cualquier otro punto.}\\end{cases}$$'
+			self.opcionestex.append(Respuesta(str(round(1 - st.beta.cdf(q, a+1, b+1), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.beta.cdf(q, a+1, b+1), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.beta.cdf(q, a, b), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.beta.cdf(q, a, b), 4)), False))
+		elif tipo == 22:
+			q = random.randint(1,12)*5/100
+			a = random.randint(2,5)
+			b = random.randint(2,5)
+			self.tex = 'El costo $Y$ de reparaciones semanales para un máquina tiene una función de densidad de probabilidad $f(y)$ con mediciones en cientos de dólares. ¿Cuánto dinero debe presupuestarse a la semana para costos de reparación, de modo que el costo real rebase la cantidad presupuestada sólo el ' + str(q*100) + '\\% del tiempo? $$ f(y)=\\begin{cases} ' + str(int(np.math.factorial(a+b+1)/(np.math.factorial(a)*np.math.factorial(b)))) + 'y^' + str(a) + '(1-y)^' + str(b) + ', & 0 \\leq y \\leq 1, \\\\ 0, & \\text{ en cualquier otro punto.}\\end{cases}$$'
+			self.opcionestex.append(Respuesta(str(round(st.beta.ppf(1-q, a+1, b+1), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.beta.ppf(q, a+1, b+1), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.beta.ppf(1-q, a, b), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.beta.ppf(q, a, b), 4)), False))
+		elif tipo == 23:
+			a = random.randint(1,5)
+			b = random.randint(1,5)
+			s = random.randint(2,10)
+			t = random.randint(2,8)*5
+			r = random.randint(2,10)
+			self.tex = 'Durante un turno de ocho horas la proporción de tiempo $Y$ que una máquina troqueladora de láminas metálicas está sin operar por mantenimiento o reparaciones tiene  una distribución beta con $\\alpha = ' + str(a) + '$ y $\\beta = '+ str(b) + '$. El costo (en cientos de dólares) de este tiempo improductivo, debido a producción perdida y costo de mantenimiento y reparación, está dado por $C = '+ str(s) + ' + ' + str(t) + 'Y + ' + str(r) + 'Y^2$. Encuentre la media de $Y$.'
+			self.opcionestex.append(Respuesta(str(round(s + t*st.beta.mean(a,b) + r*st.beta.moment(2, a, b), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(t*st.beta.mean(a,b) + r*st.beta.moment(2, a, b), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(s + t*st.beta.mean(a,b) + r*st.beta.mean(a, b)**2, 4)), False))
+			self.opcionestex.append(Respuesta(str(round(s + t*st.beta.mean(a,b) + r*st.beta.var(a, b), 4)), False))
+			
 			
 
 			

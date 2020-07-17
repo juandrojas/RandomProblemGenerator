@@ -31,12 +31,13 @@ def tex_preamble(file):
 	file.write('\\usepackage[spanish,es-nodecimaldot]{babel}\n')
 	file.write('\\usepackage{blindtext}\n')
 	file.write('\\usepackage{enumitem}\n')
+	file.write('\\usepackage{amsmath}\n')
 	file.write('\\begin{document}\n')
 	file.write('\\begin{enumerate}\n')
 
 file = open('main.tex', 'w')
 tex_preamble(file)
-for i in range(1,20):
+for i in range(1,24):
 	write_in_tex(file, question.Pregunta(i))
 file.write('\\end{enumerate}\n')
 file.write('\\end{document}\n')
