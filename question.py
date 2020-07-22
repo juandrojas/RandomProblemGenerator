@@ -77,6 +77,27 @@ class Tipo:
 		elif tipo == 23:
 			self.seccion = '4.7'
 			self.numero = '4.129'
+		elif tipo == 24:
+			self.seccion = '4.7'
+			self.numero = '4.133'
+		elif tipo == 25:
+			self.seccion = '4.9'
+			self.numero = '4.140a'
+		elif tipo == 26:
+			self.seccion = '4.9'
+			self.numero = '4.140c'
+		elif tipo == 27:
+			self.seccion = '4.10'
+			self.numero = '4.146'
+		elif tipo == 28:
+			self.seccion = '4.10'
+			self.numero = '4.147'
+		elif tipo == 29:
+			self.seccion = '4.10'
+			self.numero = '4.151'
+		elif tipo == 30:
+			self.seccion = '4.10'
+			self.numero = '4.152'
 
 class Respuesta:
 	"""docstring for Respuesta"""
@@ -235,11 +256,11 @@ class Pregunta:
 			n = random.randint(5,15)
 			a = random.randint(80,120)
 			b = random.randint(25,50)
-			c = random.randint(2,5)
+			c = random.randint(3,5)
 			self.tex = 'El tiempo $Y$ necesario para completar una operación clave en la construcción de casas tiene una distribución exponencial con media de ' + str(n) + ' horas. La fórmula $C = ' + str(a) +' + ' +  str(b) + 'Y + ' + str(c) + 'Y^2$ relaciona el costo $C$ de completar esta operación con el cuadrado del tiempo para completarla. Encuentre la media de $C$.'
 			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + c*st.expon.moment(2, loc=0, scale=n), 4)), True))
 			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + c*st.expon.var(loc=0, scale=n), 4)), False))
-			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + c*st.expon.mean(loc=0, scale=n)**2, 4)), False))
+			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + c*st.expon.mean(loc=0, scale=n), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(a + b*st.expon.mean(loc=0, scale=n) + (c**2)*st.expon.var(loc=0, scale=n), 4)), False))
 		elif tipo == 16:
 			n = random.randint(30,50)
@@ -311,8 +332,86 @@ class Pregunta:
 			self.opcionestex.append(Respuesta(str(round(t*st.beta.mean(a,b) + r*st.beta.moment(2, a, b), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(s + t*st.beta.mean(a,b) + r*st.beta.mean(a, b)**2, 4)), False))
 			self.opcionestex.append(Respuesta(str(round(s + t*st.beta.mean(a,b) + r*st.beta.var(a, b), 4)), False))
-			
-			
+		elif tipo == 24:
+			a = random.randint(2,5)
+			b = random.randint(2,5)
+			self.tex = 'La proporción de tiempo por día que todas las cajas en un supermecado están ocupadas es una variable aleatoria $Y$ con una función de densidad dada por $f(y)$, para una constante $c$ que hace de $f(y)$ una función de densidad. Calcule la desviación estádar de $Y$. $$ f(y)=\\begin{cases} cy^' + str(a) + '(1-y)^' + str(b) + ', & 0 \\leq y \\leq 1, \\\\ 0, & \\text{ en cualquier otro punto.}\\end{cases}$$'
+			self.opcionestex.append(Respuesta(str(round(st.beta.std(a+1,b+1), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.beta.var(a+1,b+1), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.beta.std(a,b), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.beta.var(a,b), 4)), False))
+		elif tipo == 25:
+			a = random.randint(2,5)
+			b = random.randint(2,5)
+			self.tex = 'Si la variable aleatoria $Y$ tiene la siguiente función generadora de momentos, ¿cómo se distribuye $Y$? $$ m(t) = \\frac{1}{(1-' + str(a) + 't)^' + str(b) + '} $$'	
+			self.opcionestex.append(Respuesta('$Y \\sim $ Gamma(' + str(a) + ',' + str(b) + ')', True))
+			self.opcionestex.append(Respuesta('$Y \\sim $ Beta(' + str(a + 1) + ',' + str(b + 1) + ')', False))
+			self.opcionestex.append(Respuesta('$Y \\sim $ Beta(' + str(a) + ',' + str(b) + ')', False))
+			self.opcionestex.append(Respuesta('$Y \\sim $ Gamma(' + str(a + 1) + ',' + str(b + 1) + ')', False))
+		elif tipo == 26:
+			mu = random.randint(-5,5)*2
+			s = random.randint(2,5)
+			self.tex = 'Si la variable aleatoria $Y$ tiene la siguiente función generadora de momentos, ¿cómo se distribuye $Y$? $$ m(t) = \\exp(' + str(mu) + 't + ' + str((s**2)/2) +' t^2)  $$'	
+			self.opcionestex.append(Respuesta('$Y \\sim $ Normal($\\mu = ' + str(mu) + '$, $\\sigma = ' + str(s) + '$)', True))
+			self.opcionestex.append(Respuesta('$Y \\sim $ Normal($\\mu = ' + str(mu) + '$, $\\sigma = ' + str((s**2)/2) + '$)', False))
+			self.opcionestex.append(Respuesta('$Y \\sim $ Normal($\\mu = ' + str(mu) + '$, $\\sigma = ' + str(s**2) + '$)', False))
+			self.opcionestex.append(Respuesta('$Y \\sim $ Normal($\\mu = ' + str(-mu) + '$, $\\sigma = ' + str((s**2)/2) + '$)', False))
+		elif tipo == 27:
+			q = random.randint(1,10)*5/100
+			mu = random.randint(1,10)*5000
+			s = random.randint(1,5)*1000
+			self.tex = 'Un fabricante de llantas desea calcular un intervalo de rendimiento en millas que excluya no más de ' + str(q*100) + '\\% del rendimiento de las llantas que él vende. Todo lo que sabe es que, para un gran número de llantas probadas, la media del rendimiento fue de ' + str(mu) + ' millas y que la desviación estándar fue de ' + str(s) + ' millas. ¿Qué intervalo sugiere usted?'
+			self.opcionestex.append(Respuesta('$(' + str(round((-s/np.sqrt(q)) + mu, 4)) + ',' + str(round((s/np.sqrt(q)) + mu, 4)) + ')$', True))
+			self.opcionestex.append(Respuesta('$(' + str(round((-s/np.sqrt(q)), 4)) + ',' + str(round((s/np.sqrt(q)), 4)) + ')$', False))
+			self.opcionestex.append(Respuesta('$(' + str(round((-s/q) + mu, 4)) + ',' + str(round((s/q) + mu, 4)) + ')$', False))
+			self.opcionestex.append(Respuesta('$(' + str(round((-s/q), 4)) + ',' + str(round((s/q), 4)) + ')$', False))
+		elif tipo == 28:
+			n = random.randint(1,5)
+			q = random.randint(11, 18)*5/100
+			self.tex = 'Una máquina empleada para llenar cajas de cereal despacha, en promedio, $\\mu$ onzas por caja. El fabricante desea que las $Y$ onzas reales despachadas no rebasen por más de ' + str(n) + ' onzas a $\\mu$, al menos el ' + str(q*100) + '\\% del tiempo. ¿Cuál es el máximo valor de $\\sigma$, la desviación estándar de $Y$, que se puede tolerar si las metas del fabricante han de satisfacerse?'
+			self.opcionestex.append(Respuesta(str(round(n*np.sqrt(1-q), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(n*np.sqrt(q), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(n*(1-q), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(n*(q), 4)), False))
+		elif tipo == 29:
+			n = random.randint(5,15)
+			a = random.randint(80,120)
+			b = random.randint(25,50)
+			c = random.randint(2,3)
+			r = random.randint(6,9)*1000
+			mu = a + b*st.expon.mean(loc=0, scale=n) + c*st.expon.moment(2, loc=0, scale=n)
+			s = np.sqrt(a**2 + (b**2)*st.expon.moment(2, loc=0, scale=n) + (c**2)*st.expon.moment(4, loc=0, scale=n) + 2*a*b*st.expon.mean(loc=0, scale=n) + 2*a*c*st.expon.moment(2, loc=0, scale=n) + 2*b*c*st.expon.moment(3, loc=0, scale=n) - mu**2)
+			self.tex = 'El tiempo $Y$ necesario para completar una operación clave en la construcción de casas tiene una distribución exponencial con media de ' + str(n) + ' horas. La fórmula $C = ' + str(a) +' + ' +  str(b) + 'Y + ' + str(c) + 'Y^2$ relaciona el costo $C$ (en dólares) de completar esta operación con el cuadrado del tiempo para completarla. ¿A lo sumo con qué frecuencia el costo rebasa los ' + str(r) + ' dólares?'
+			self.opcionestex.append(Respuesta(str(round((s**2)/((r-mu)**2), 4)), True))
+			self.opcionestex.append(Respuesta(str(round((s)/((r-mu)), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - (s**2)/((r-mu)**2), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - (s)/((r-mu)), 4)), False))
+		elif tipo == 30:
+			a = random.randint(1,5)
+			b = random.randint(1,5)
+			s = random.randint(25,50)
+			t = random.randint(2,5)
+			q = random.randint(75,95)/100
+			sigma = np.sqrt((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(2, a, loc=0, scale=b)**2) + 2*s*t*(st.gamma.moment(3, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)*st.gamma.moment(2, a, loc=0, scale=b)))
+			mu = s*st.gamma.mean(a, loc=0, scale=b) + t*st.gamma.moment(2, a, loc=0, scale=b)
+			self.tex = 'El tiempo improductivo por semana $Y$ (en horas) de una máquina industrial tiene aproximadamente una distribución gamma con $\\alpha = ' + str(a) + ' $ y $\\beta = ' + str(b) + ' $. La pérdida $L$ (en dólares) para la operación industrial como resultado de este tiempo improductivo está dada por $L = ' + str(s) + 'Y + ' + str(t) + 'Y^2$. Encuentre un intervalo que contenga $L$ durante al menos ' + str(q*100) + ' \\% de las semanas que la máquina esta en uso.'  
+			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
+			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
+			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/q) + mu, 4)) + ',' + str(round((sigma/q) + mu, 4)) + ')$', False))
+			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
+		elif tipo == 31:
+			a = random.randint(1,5)
+			b = random.randint(1,5)
+			s = random.randint(2,10)
+			t = random.randint(2,8)*5
+			r = random.randint(2,10)
+			q = random.randint(75,95)/100
+			mu = s + t*st.beta.mean(a,b) + r*st.beta.moment(2, a, b)
+			sigma = np.sqrt(s**2 + (t**2)*st.beta.moment(2, a, b) + (r**2)*st.beta.moment(4, a, b) + 2*s*t*st.beta.mean(a, b) + 2*s*r*st.beta.moment(2, a, b) + 2*t*r*st.beta.moment(3, a, b) - mu**2)
+			self.tex = 'Durante un turno de ocho horas la proporción de tiempo $Y$ que una máquina troqueladora de láminas metálicas está sin operar por mantenimiento o reparaciones tiene  una distribución beta con $\\alpha = ' + str(a) + '$ y $\\beta = '+ str(b) + '$. El costo (en cientos de dólares) de este tiempo improductivo, debido a producción perdida y costo de mantenimiento y reparación, está dado por $C = '+ str(s) + ' + ' + str(t) + 'Y + ' + str(r) + 'Y^2$. Encuentre un intervalo para el cual la probabilidad de que $C$ se encuentre dentro del mismo sea al menos ' + str(q) + '.'
+			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
+			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
+			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/q) + mu, 4)) + ',' + str(round((sigma/q) + mu, 4)) + ')$', False))
+			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
 
-			
-			
+
