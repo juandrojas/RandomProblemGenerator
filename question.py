@@ -98,6 +98,36 @@ class Tipo:
 		elif tipo == 30:
 			self.seccion = '4.10'
 			self.numero = '4.152'
+		elif tipo == 31:
+			self.seccion = '4.10'
+			self.numero = '4.153'
+		elif tipo == 32:
+			self.seccion = '4.12'
+			self.numero = '4.161'
+		elif tipo == 33:
+			self.seccion = '4.12'
+			self.numero = '4.162'
+		elif tipo == 34:
+			self.seccion = '4.5'
+			self.numero = '4.66'
+		elif tipo == 35:
+			self.seccion = '4.12'
+			self.numero = '4.163'
+		elif tipo == 36:
+			self.seccion = '4.12'
+			self.numero = '4.168'
+		elif tipo == 37:
+			self.seccion = '4.12'
+			self.numero = '4.169'
+		elif tipo == 38:
+			self.seccion = '4.12'
+			self.numero = '4.171a'
+		elif tipo == 39:
+			self.seccion = '4.12'
+			self.numero = '4.171b'
+		elif tipo == 40:
+			self.seccion = '4.12'
+			self.numero = '4.179'
 
 class Respuesta:
 	"""docstring for Respuesta"""
@@ -413,5 +443,81 @@ class Pregunta:
 			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
 			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/q) + mu, 4)) + ',' + str(round((sigma/q) + mu, 4)) + ')$', False))
 			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
-
+		elif tipo == 32:
+			mu = random.randint(12,18)*5
+			s = random.randint(8,15)
+			q = random.randint(14,18)*5/100
+			self.tex = 'El tiempo necesario para completar un examen de aptitud en universidades se encuentra normalmente distribuido con media de ' + str(mu) + ' minutos y desviación estándar de ' + str(s) + ' minutos. ¿Cuántos minutos debe durar el examen si deseamos que el ' +str(q*100) + '\\% de los estudiantes tenga suficiente tiempo para completar el examen?'
+			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(q, loc=mu, scale=s), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(1-q, loc=mu, scale=s), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(q, loc=mu, scale=s**2), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(q, loc=0, scale=1), 4)), False))
+		elif tipo == 33:
+			n = random.randint(6,10)*500
+			mu = random.randint(3,6)*100
+			s = random.randint(4,7)*10
+			q = random.randint(1,5)/100
+			self.tex = 'Una fábrica utiliza ' + str(n) + ' focos cuya vida útil está normalmente distribuida con media de ' + str(mu) + ' horas y desviación estándar de ' + str(s) + '. Para reducir al mínimo el número de focos que se queman durante horas de operación, todos son cambiados después de un periodo determinado. ¿Con quué frecuencia deben cambiarse los focos si deseamos que no más de ' + str(q*100) + '\\% de los focos se quemen entre periodos de cambio.'
+			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(1-q, loc=mu, scale=s), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(q, loc=mu, scale=s), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(n*q, 4)), False))
+			self.opcionestex.append(Respuesta(str(round(n*(1-q))), False))
+		elif  tipo == 34:
+			n = random.randint(1,5)
+			mu = n + random.randint(1,2)*5/10000
+			s = random.randint(2,5)*5/10000
+			e = random.randint(5,10)*5/10000
+			self.tex = 'Una operación de maquinado produce cojinetes con diámteros que está normalmente distribuidos con media de ' + str(mu) + ' pulgadas y desviación estándar de ' + str(s) + ' pulgadas. Las especificaciones requieren que los diámetros de los cojinetes se encuentren el intervalo $' + str(n) + ' \\pm ' + str(e) + ' $ pulgadas. Los cojinetes que estén fuera de este intervalo son considerados de desecho y deben volver a maquinarse. Con el ajuste de la máquina existente, ¿qué fracción de la producción total se desechará?'
+			self.opcionestex.append(Respuesta(str(round(1 - (st.norm.cdf(n + e, loc=mu, scale=s) - st.norm.cdf(n - e, loc=mu, scale=s)),  5)), True))
+			self.opcionestex.append(Respuesta(str(round((st.norm.cdf(n + e, loc=mu, scale=s) - st.norm.cdf(n - e, loc=mu, scale=s)),  5)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - (st.norm.cdf(n + e, loc=mu, scale=s)),  5)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.norm.cdf(n - e, loc=mu, scale=s),  5)), False))
+		elif tipo == 35:
+			n = random.randint(1,5)
+			m = random.randint(2,5)
+			mu = n + random.randint(1,2)*5/10000
+			s = random.randint(2,5)*5/10000
+			e = random.randint(5,10)*5/10000
+			self.tex = 'Una operación de maquinado produce cojinetes con diámteros que está normalmente distribuidos con media de ' + str(mu) + ' pulgadas y desviación estándar de ' + str(s) + ' pulgadas. Las especificaciones requieren que los diámetros de los cojinetes se encuentren el intervalo $' + str(n) + ' \\pm ' + str(e) + ' $ pulgadas. Los cojinetes que estén fuera de este intervalo son considerados de desecho y deben volver a maquinarse. Suponga que ' + num2words(m, lang = 'es') + ' se sacan al azar de la producción. ¿Cuál es la probabilidad de que al menos uno esté defectuso?'
+			q = 1 - (st.norm.cdf(n + e, loc=mu, scale=s) - st.norm.cdf(n - e, loc=mu, scale=s))
+			self.opcionestex.append(Respuesta(str(round(1 - ((1-q)**m), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(1 - ((q)**m), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(((1-q)**m), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(q, 4)), False))
+		elif tipo == 36:
+			mu = random.randint(8,12)*1000
+			c = random.randint(3,7)*1000
+			self.tex = 'El número de millas que un automóvil puede recorrer antes de que su batería se agote se distribuye exponencialmente con media de ' + str(mu) + ' millas. El propietario de un automóvil necesita hacer un viaje de ' + str(c) + ' millas. ¿Cuál es la probabilidad de que pueda hacer el viaje sin tener que reemplazar la batería del coche?'
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(c, loc=0, scale=mu), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(c, loc=0, scale=mu), 4)), False))
+			self.opcionestex.append(Respuesta('Como no se sabe cuánta batería ha agotado el automóvil antes de iniciar el viaje, no hay suficiente información para responder.', False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(c, loc=0, scale=mu+c), 4)), False))
+		elif tipo == 37:
+			l = random.randint(5,15)
+			t = random.randint(10,25)
+			self.tex = 'Si entran llamadas a un centro policial de emergencia a razón de ' + num2words(l, lang='es') + ' por hora, ¿cuál es la probabilidad de que transcurran más de ' + str(t) + ' minutos entre las dos llamadas siguientes?'
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(t/60, loc=0, scale=1/l), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(t/60, loc=0, scale=1/l), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(t/60, loc=0, scale=l), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(t/60, loc=0, scale=l), 4)), False))
+		elif tipo == 38:
+			l = random.randint(2, 5)
+			self.tex = 'Suponga que llegan clientes a una caja a razón de ' + num2words(l, lang='es') + ' por minuto. ¿Cuáles son la media y la varianza de los tiempo de espera entre llegadas sucesivas de clientes?'
+			self.opcionestex.append(Respuesta('$\\mu = \\frac{1}{' + str(l) + '}$, $\\sigma^2 = \\frac{1}{' + str(l**2) + '}$', True))
+			self.opcionestex.append(Respuesta('$\\mu = ' + str(l) + '$, $\\sigma^2 = \\frac{1}{' + str(l) + '}$', False))
+			self.opcionestex.append(Respuesta('$\\mu = ' + str(l) + '$, $\\sigma^2 = ' + str(l**2) + '$', False))
+			self.opcionestex.append(Respuesta('$\\mu = \\frac{1}{' + str(l) + '}$, $\\sigma^2 = \\frac{1}{' + str(l) + '}$', False))
+		elif tipo == 39:
+			l = random.randint(2, 5)
+			n = random.randint(3,5)
+			self.tex = 'Suponga que llegan clientes a una caja a razón de ' + num2words(l, lang='es') + ' por minuto. Si una empleada tarda ' + str(n) + ' minutos en atender al primer cliente que llega a una caja, ¿cuál es la probabilidad de que al menos un cliente más esté esperando cuando se termine de servir al primer cliente?'
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(n, loc=0, scale=1/l), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(n, loc=0, scale=1/l), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(n, loc=0, scale=l), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(n, loc=0, scale=l), 4)), False))
+		elif tipo == 40:
+			l = random.randint(8,12)*10
+			c = random.randint(5,10)
+			v = c + random.randint(2,5)
+			self.tex = 'Una comerciante al menudeo tiene una demanda diaria $Y$ de cierto alimento que se vende por libra, donde $Y$ (medido en cientos de libras) tiene la función de densidad $f(y)$. Ella no puede tener en existencia más de ' + str(l) + ' libras. La comerciante desea adquirir $' +  str(l) + 'k$ de alimento, que compra a ' + str(c) + ' centavos la libra y vende a ' + str(v) + ' centavos por libra. ¿Qué valor de $k$ minimizará su utilidad esperada?'
 
