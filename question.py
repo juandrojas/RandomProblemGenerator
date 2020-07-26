@@ -125,9 +125,6 @@ class Tipo:
 		elif tipo == 39:
 			self.seccion = '4.12'
 			self.numero = '4.171b'
-		elif tipo == 40:
-			self.seccion = '4.12'
-			self.numero = '4.179'
 
 class Respuesta:
 	"""docstring for Respuesta"""
@@ -515,9 +512,4 @@ class Pregunta:
 			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(n, loc=0, scale=1/l), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(n, loc=0, scale=l), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(n, loc=0, scale=l), 4)), False))
-		elif tipo == 40:
-			l = random.randint(8,12)*10
-			c = random.randint(5,10)
-			v = c + random.randint(2,5)
-			self.tex = 'Una comerciante al menudeo tiene una demanda diaria $Y$ de cierto alimento que se vende por libra, donde $Y$ (medido en cientos de libras) tiene la función de densidad $f(y)$. Ella no puede tener en existencia más de ' + str(l) + ' libras. La comerciante desea adquirir $' +  str(l) + 'k$ de alimento, que compra a ' + str(c) + ' centavos la libra y vende a ' + str(v) + ' centavos por libra. ¿Qué valor de $k$ minimizará su utilidad esperada?'
-
+		
