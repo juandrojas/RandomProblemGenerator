@@ -125,6 +125,15 @@ class Tipo:
 		elif tipo == 39:
 			self.seccion = '4.12'
 			self.numero = '4.171b'
+		elif tipo == 40:
+			self.seccion = '4.12'
+			self.numero = '4.164'
+		elif tipo == 41: 
+			self.seccion = '4.12'
+			self.numero = '4.165a'
+		elif tipo == 42:
+			self.seccion = '4.12'
+			self.numero = '4.165c'
 
 class Respuesta:
 	"""docstring for Respuesta"""
@@ -512,4 +521,29 @@ class Pregunta:
 			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(n, loc=0, scale=1/l), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(n, loc=0, scale=l), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(n, loc=0, scale=l), 4)), False))
-		
+		elif tipo == 40:
+			mu = random.randint(10, 20)*5
+			s = random.randint(8,12)
+			b = random.choice([True, False])
+			t = mu - random.randint(1,3)*5
+			if b:
+				l = 'fallarán antes de ' + str(t)
+				self.opcionestex.append(Respuesta(str(round(st.norm.cdf(t, loc=mu, scale=s), 4)), True))
+				self.opcionestex.append(Respuesta(str(round(1 - st.norm.cdf(t, loc=mu, scale=s), 4)), False))
+				self.opcionestex.append(Respuesta(str(round(st.norm.cdf(t, loc=mu + 10, scale=s), 4)), False))
+				self.opcionestex.append(Respuesta(str(round(1- st.norm.cdf(t, loc=mu + 10, scale=s), 4)), False))
+			else:
+				l = 'durarán al menos ' + str(t)
+				self.opcionestex.append(Respuesta(str(round(1- st.norm.cdf(t, loc=mu, scale=s), 4)), True))
+				self.opcionestex.append(Respuesta(str(round(st.norm.cdf(t, loc=mu, scale=s), 4)), False))
+				self.opcionestex.append(Respuesta(str(round(st.norm.cdf(t, loc=mu + 10, scale=s), 4)), False))
+				self.opcionestex.append(Respuesta(str(round(1- st.norm.cdf(t, loc=mu + 10, scale=s), 4)), False))
+			self.tex = 'La vida útil de las barreras de perforación de pozos petroleros depende de los tipos de roca y suelo que encuentren al perforar , pero se estima que la duración media es de ' +str(mu + 10) + ' horas. Una compaía de exploración compra barrenas cuya vida útil está normalmente distribuida, en forma aproximada, con media de ' +str(mu) + ' y desviación estándar de ' +str(s) + ' horas. ¿Qué proporción de las barrenas de la compañía ' + l + ' horas?'
+		elif tipo == 41:
+			n = random.randint(2,3)
+			m = random.randint(2,5)
+			self.tex = 'Si $Y$ tiene  la siguiente función de densidad, encuentre $c$. $$ f(y)=\\begin{cases} cy^' + str(m) + 'e^{-' + str(n) + 'y}, & 0 \\leq y \\leq \\infty, \\\\ 0, & \\text{ en cualquier otro punto.}\\end{cases}$$'
+			self.opcionestex.append(Respuesta(str(round((n**(m+1))/np.math.factorial(m), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(np.math.factorial(n)/np.math.factorial(m), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(np.math.factorial(m)/(n**(m+1)), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(np.math.factorial(m)/np.math.factorial(n) - 0.5, 4)), False))
