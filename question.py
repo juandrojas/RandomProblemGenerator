@@ -132,9 +132,23 @@ class Tipo:
 			self.seccion = '4.12'
 			self.numero = '4.165a'
 		elif tipo == 42:
-			self.seccion = '4.12'
-			self.numero = '4.165c'
-
+			self.seccion = '4.4'
+			self.numero = '4.48c'
+		elif tipo == 43:
+			self.seccion = '4.4'
+			self.numero = '4.49'
+		elif tipo == 44:
+			self.seccion = '4.4'
+			self.numero = '4.53c'
+		elif tipo == 45:
+			self.seccion = '4.5'
+			self.numero = '4.77b'
+		elif tipo == 46:
+			self.seccion = '4.6'
+			self.numero = '4.106'
+		elif tipo == 47:
+			self.seccion = '4.6'
+			self.numero = '4.107'
 class Respuesta:
 	"""docstring for Respuesta"""
 	def __init__(self, valor, correcta):
@@ -150,16 +164,10 @@ class Pregunta:
 	"""base para cada pregunta for Pregunta"""
 	def __init__(self, tipo):
 		self.tipo = tipo
-		self.opcionestext = []
 		self.opcionestex = []
 		if tipo == 1:
 			a = random.randint(2, 5)
 			self.tex = 'Si un paracaidista aterriza en un punto aleatorio en una recta entre los marcadores $A$ y $B$, encuentre la probabilidad de que su distancia hasta $A$ sea más de ' + num2words(a, lang='es') + ' veces su distancia a $B$.'
-			# self.text = 'Si un paracaidista aterriza en un punto aleatorio en una recta entre los marcadores A y B, encuentre la probabilidad de que su distancia hasta A sea más de ' + num2words(a, lang='es') + ' veces su distancia a B.'
-			# self.opcionestext.append(Respuesta(str(round(st.uniform.cdf(1/(a +1)),4)), True))
-			# self.opcionestext.append(Respuesta(str(round(st.uniform.cdf(1/a),4)), False))
-			# self.opcionestext.append(Respuesta(str(round(1 - st.uniform.cdf(1/(a+1)),4)), False))
-			# self.opcionestext.append(Respuesta(str(round(1 - st.uniform.cdf(1/a),4)), False))
 			self.opcionestex.append(Respuesta('$'+str(round(st.uniform.cdf(1/(a +1)),4))+'$', True))
 			self.opcionestex.append(Respuesta('$'+str(round(st.uniform.cdf(1/a),4))+'$', False))
 			self.opcionestex.append(Respuesta('$'+str(round(1 - st.uniform.cdf(1/(a+1)),4))+'$', False))
@@ -169,15 +177,10 @@ class Pregunta:
 			i = random.randint(1,5)
 			b = a+i
 			self.tex = 'La falla de una tarjeta de circuito que utiliza un sistema de cómputo interrumpe el trabajo hasta que se instala una nueva. El tiempo de entrega, $Y$, está uniformemente distribuido en el intervalo de ' + num2words(a, lang='es') +' a ' + num2words(b, lang='es')+ ' días. El costo de la falla de una tarjeta y la interrupción incluye el costo fijo $c_0$ de una nueva tarjeta y un costo que aumenta proporcionalmente con $Y^2$. Si $C$ es el costo en que se incurre, $C=c_0+c_1Y^2$, en términos de $c_0$ y $c_1$ encuentre el costo esperado asociado a una sola tarjeta de circuito que falle.'
-			# self.text = 'La falla de una tarjeta de circuito que utiliza un sistema de cómputo interrumpe el trabajo hasta que se instala una nueva. El tiempo de entrega, Y, está uniformemente distribuido en el intervalo de ' + num2words(a, lang='es') +' a ' + num2words(b, lang='es')+ ' días. El costo de la falla de una tarjeta y la interrupción incluye el costo fijo c_0 de una nueva tarjeta y un costo que aumenta proporcionalmente con Y^2. Si C es el costo en que se incurre, C=c_0+c_1*Y^2, , en términos de c_0 y c_1 encuentre el costo esperado asociado a una sola tarjeta de circuito que falle.' 
 			self.opcionestex.append(Respuesta('$c_0 + ' + str(round(st.uniform.var(loc=a, scale =i) + st.uniform.mean(loc=a, scale =i)**2,4)) + 'c_1$', True))
 			self.opcionestex.append(Respuesta('$c_0 + ' + str(round(st.uniform.mean(loc=a, scale =i)**2,4)) + 'c_1$', False))
 			self.opcionestex.append(Respuesta('$c_0 + ' + str(round(st.uniform.mean(loc=a, scale =i),4)) + 'c_1$', False))
 			self.opcionestex.append(Respuesta('$c_0 + ' + str(round(st.uniform.var(loc=a, scale =i),4)) + 'c_1$', False))
-			# self.opcionestext.append(Respuesta('c_0 + ' + str(round(st.uniform.var(loc=a, scale =i) + st.uniform.mean(loc=a, scale =i)**2,4)) + '*c_1', True))
-			# self.opcionestext.append(Respuesta('c_0 + ' + str(round(st.uniform.mean(loc=a, scale =i)**2,4)) + '*c_1', False))
-			# self.opcionestext.append(Respuesta('c_0 + ' + str(round(st.uniform.mean(loc=a, scale =i),4)) + '*c_1', False))
-			# self.opcionestext.append(Respuesta('c_0 + ' + str(round(st.uniform.var(loc=a, scale =i),4)) + '*c_1', False))
 		elif tipo == 3:
 			a = random.randint(1,10)*10
 			b = random.randint(1,5)*5
@@ -430,11 +433,17 @@ class Pregunta:
 			q = random.randint(75,95)/100
 			sigma = np.sqrt((s**2)*st.gamma.var(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(4, a, loc=0, scale=b) - st.gamma.moment(2, a, loc=0, scale=b)**2) + 2*s*t*(st.gamma.moment(3, a, loc=0, scale=b) - st.gamma.moment(1, a, loc=0, scale=b)*st.gamma.moment(2, a, loc=0, scale=b)))
 			mu = s*st.gamma.mean(a, loc=0, scale=b) + t*st.gamma.moment(2, a, loc=0, scale=b)
-			self.tex = 'El tiempo improductivo por semana $Y$ (en horas) de una máquina industrial tiene aproximadamente una distribución gamma con $\\alpha = ' + str(a) + ' $ y $\\beta = ' + str(b) + ' $. La pérdida $L$ (en dólares) para la operación industrial como resultado de este tiempo improductivo está dada por $L = ' + str(s) + 'Y + ' + str(t) + 'Y^2$. Encuentre un intervalo que contenga $L$ durante al menos ' + str(q*100) + ' \\% de las semanas que la máquina esta en uso.'  
-			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
-			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
-			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/q) + mu, 4)) + ',' + str(round((sigma/q) + mu, 4)) + ')$', False))
-			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
+			self.tex = 'El tiempo improductivo por semana $Y$ (en horas) de una máquina industrial tiene aproximadamente una distribución gamma con $\\alpha = ' + str(a) + ' $ y $\\beta = ' + str(b) + ' $. La pérdida $L$ (en dólares) para la operación industrial como resultado de este tiempo improductivo está dada por $L = ' + str(s) + 'Y + ' + str(t) + 'Y^2$. De los siguientes intervalos, ¿cuál es el más pequeño que contiene a $L$ durante al menos ' + str(q*100) + ' \\% de las semanas que la máquina esta en uso?'  
+			if (-sigma/np.sqrt(1-q)) + mu > 0:
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma**2/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma**2/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
+			else: 
+				self.opcionestex.append(Respuesta('$(' + str(round(0, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
 		elif tipo == 31:
 			a = random.randint(1,5)
 			b = random.randint(1,5)
@@ -444,11 +453,17 @@ class Pregunta:
 			q = random.randint(75,95)/100
 			mu = s + t*st.beta.mean(a,b) + r*st.beta.moment(2, a, b)
 			sigma = np.sqrt(s**2 + (t**2)*st.beta.moment(2, a, b) + (r**2)*st.beta.moment(4, a, b) + 2*s*t*st.beta.mean(a, b) + 2*s*r*st.beta.moment(2, a, b) + 2*t*r*st.beta.moment(3, a, b) - mu**2)
-			self.tex = 'Durante un turno de ocho horas la proporción de tiempo $Y$ que una máquina troqueladora de láminas metálicas está sin operar por mantenimiento o reparaciones tiene  una distribución beta con $\\alpha = ' + str(a) + '$ y $\\beta = '+ str(b) + '$. El costo (en cientos de dólares) de este tiempo improductivo, debido a producción perdida y costo de mantenimiento y reparación, está dado por $C = '+ str(s) + ' + ' + str(t) + 'Y + ' + str(r) + 'Y^2$. Encuentre un intervalo para el cual la probabilidad de que $C$ se encuentre dentro del mismo sea al menos ' + str(q) + '.'
-			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
-			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
-			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/q) + mu, 4)) + ',' + str(round((sigma/q) + mu, 4)) + ')$', False))
-			self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
+			self.tex = 'Durante un turno de ocho horas la proporción de tiempo $Y$ que una máquina troqueladora de láminas metálicas está sin operar por mantenimiento o reparaciones tiene  una distribución beta con $\\alpha = ' + str(a) + '$ y $\\beta = '+ str(b) + '$. El costo (en cientos de dólares) de este tiempo improductivo, debido a producción perdida y costo de mantenimiento y reparación, está dado por $C = '+ str(s) + ' + ' + str(t) + 'Y + ' + str(r) + 'Y^2$. De los siguientes intervalos, ¿cuál es el más pequeño que contiene a $C$ con probabilidad de al menos ' + str(q) + '?'
+			if (-sigma/np.sqrt(1-q)) + mu > 0:
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma**2/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma**2/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
+			else: 
+				self.opcionestex.append(Respuesta('$(' + str(round(0, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
 		elif tipo == 32:
 			mu = random.randint(12,18)*5
 			s = random.randint(8,15)
@@ -463,7 +478,7 @@ class Pregunta:
 			mu = random.randint(3,6)*100
 			s = random.randint(4,7)*10
 			q = random.randint(1,5)/100
-			self.tex = 'Una fábrica utiliza ' + str(n) + ' focos cuya vida útil está normalmente distribuida con media de ' + str(mu) + ' horas y desviación estándar de ' + str(s) + '. Para reducir al mínimo el número de focos que se queman durante horas de operación, todos son cambiados después de un periodo determinado. ¿Con quué frecuencia deben cambiarse los focos si deseamos que no más de ' + str(q*100) + '\\% de los focos se quemen entre periodos de cambio.'
+			self.tex = 'Una fábrica utiliza ' + str(n) + ' focos cuya vida útil está normalmente distribuida con media de ' + str(mu) + ' horas y desviación estándar de ' + str(s) + '. Para reducir al mínimo el número de focos que se queman durante horas de operación, todos son cambiados después de un periodo determinado. ¿Con qué frecuencia deben cambiarse los focos si deseamos que no más de ' + str(q*100) + '\\% de los focos se quemen entre periodos de cambio?'
 			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(1-q, loc=mu, scale=s), 4)), True))
 			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(q, loc=mu, scale=s), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(n*q, 4)), False))
@@ -547,3 +562,67 @@ class Pregunta:
 			self.opcionestex.append(Respuesta(str(round(np.math.factorial(n)/np.math.factorial(m), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(np.math.factorial(m)/(n**(m+1)), 4)), False))
 			self.opcionestex.append(Respuesta(str(round(np.math.factorial(m)/np.math.factorial(n) - 0.5, 4)), False))
+		elif tipo == 42:
+			n = random.randint(3,7)*100
+			a = random.randint(2, 5)
+			self.tex = 'Una experta en eficiencia de la planta selecciona al azar un lugar, a lo largo de una línea de ensamble de ' + str(n) + ' pies, desde el cuál observa hábitos de los trabajadores de la línea. Encuentre la probabilidad de que el punto que ella seleccione esté al menos a ' + num2words(a, lang='es') + ' veces de distancia del principio de la línea que del final.'
+			self.opcionestex.append(Respuesta('$'+str(round(st.uniform.cdf(1/(a +1)),4))+'$', True))
+			self.opcionestex.append(Respuesta('$'+str(round(st.uniform.cdf(1/a),4))+'$', False))
+			self.opcionestex.append(Respuesta('$'+str(round(1 - st.uniform.cdf(1/(a+1)),4))+'$', False))
+			self.opcionestex.append(Respuesta('$'+str(round(1 - st.uniform.cdf(1/a),4))+'$', False))
+		elif tipo == 43:
+			ops = [5, 10, 15, 20, 25, 35, 40, 45, 50, 55]
+			random.shuffle(ops)
+			n = ops[0]
+			self.tex = 'Una llamada telefónica llega a un conmutador al azar en un intervalo de no más de un minuto. El conmutador estuvo totalmente ocupado por ' + str(n) + ' segundos en este periodo de un minuto. ¿Cuál es la probabilidad de que la llamada llegará cuando el conmutador no hubiera estado totalmente ocupado?'
+			self.opcionestex.append(Respuesta(str(round(1 - n/60, 4)), True))
+			self.opcionestex.append(Respuesta(str(round(n/60, 4)), False))
+			self.opcionestex.append(Respuesta(str(round(0, 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1, 4)), False))
+		elif tipo == 44:
+			n = random.randint(6,12)
+			a = random.randint(3, n-3)
+			b = random.randint(a+1,n-2)
+			self.tex = 'El número de tarjetas de circuito defectuosas que salen de una máquina soldadora sigue una distribución de Poisson. Durante un día específico de ' + num2words(n, lang='es') + ' horas, se encontró una tarjeta defectuosa. Dado que no se produjeron tarjetas defectuosas durante las primeras ' + num2words(a, lang='es') + ' horas de operación, encuentre la probabilidad de que la tarjeta defectuosa se fabricara durante la ' + num2words(b, lang='es', to='ordinal') + ' hora.'
+			self.opcionestex.append(Respuesta(str(round(1/(n-a), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(1/(n), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1/(n-b), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1/(b-a), 4)), False))
+		elif tipo == 45:
+			mu_s = random.randint(45,55)*10
+			s_s = random.randint(8,12)*10
+			mu_a = random.randint(15,25)
+			s_a = random.randint(3,7)
+			a = mu_s + random.randint(5,10)*10
+			self.tex = 'Los exámenes de admisión SAT y ACT (de aptitud y universitario) se aplican a miles de estudiantes cada año. Las secciones de matemáticas de cada uno de estos exámenes producen calificaciones que están normalmente distribuidas, en forma aproximada. En años recientes las calificaciones de exámenes SAT de matemáticas han promediado '+ str(mu_s) + ' con desviación estándar de ' + str(s_s) + '. El promedio y desviación estándar para calificaciones ACT de matemáticas son ' + str(mu_a) + ' y ' + str(s_a) + ', respectivamente. Una escuela de ingeniería establece ' + str(a) + ' como calificación mínima para el SAT de matemáticas para estudiantes de nuevo ingreso. ¿Qué calificación debe establecer la escuela de ingeniería como estándar comparable en el examen ACT de matemáticas?'
+			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(st.norm.cdf(a, loc=mu_s, scale=s_s), loc=mu_a, scale=s_a), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.norm.ppf(1 - st.norm.cdf(a, loc=mu_s, scale=s_s), loc=mu_a, scale=s_a), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(mu_a*a/mu_s, 4)), False))
+			self.opcionestex.append(Respuesta(str(round(s_a*a/s_s, 4)), False))
+		elif tipo == 46:
+			a = random.randint(3,6)
+			b = random.randint(2,5)
+			mu = a*b
+			s2 = a*(b**2)
+			self.tex = 'Los tiempos de respuesta $Y$ en una terminal de computadora en línea tienen aproximadamente una distribución gamma con media de ' + str(mu) + ' segundos y varianza de ' +str(s2) + ' segundos. ¿Cuál de las siguientes funciones, definidas en el intervalo $0 \\leq y < \\infty$, corresponde a la densidad de $Y$?'
+			self.opcionestex.append(Respuesta('$f(y) = \\frac{y^{'+ str(a-1) + '}e^{-y/' + str(b) + '}}{' + str(int((b**a)*np.math.factorial(a-1))) + '}$', True))
+			self.opcionestex.append(Respuesta('$f(y) = \\frac{y^{'+ str(a) + '}e^{-y/' + str(b) + '}}{' + str(int((b**a)*np.math.factorial(a))) + '}$', False))
+			self.opcionestex.append(Respuesta('$f(y) = \\frac{y^{'+ str(a) + '}e^{-y/' + str(b) + '}}{' + str(int((b**a)*np.math.factorial(a-1))) + '}$', False))
+			self.opcionestex.append(Respuesta('$f(y) = \\frac{y^{'+ str(a-1) + '}e^{-y/' + str(b) + '}}{' + str(int((b**a)*np.math.factorial(a))) + '}$', False))
+		elif tipo == 47:
+			a = random.randint(1,5)
+			b = random.randint(1,5)
+			q = random.randint(12, 18)*5/100
+			mu = a*b
+			sigma = np.sqrt(a*(b**2)) 
+			self.tex = 'Los tiempos de respuesta $Y$ en una terminal de computadora en línea tienen aproximadamente una distribución gamma con media de ' + str(mu) + ' segundos y varianza de ' +str(a*(b**2)) + ' segundos. Usando Chebyshev, decida cual de los siguientes intervalos es el más pequeño que contiene al menos ' + str(round(q*100, 1)) + '\\% de los tiempos de respuesta'
+			if (-sigma/np.sqrt(1-q)) + mu > 0:
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma**2/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma**2/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
+			else: 
+				self.opcionestex.append(Respuesta('$(' + str(round(0, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', True))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
+				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
