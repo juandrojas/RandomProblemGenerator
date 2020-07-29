@@ -149,6 +149,12 @@ class Tipo:
 		elif tipo == 47:
 			self.seccion = '4.6'
 			self.numero = '4.107'
+		elif tipo == 48:
+			self.seccion = '4.12'
+			self.numero = '4.172'
+		elif tipo == 49:
+			self.seccion = '4.7'
+			self.numero = 'Adicional'
 class Respuesta:
 	"""docstring for Respuesta"""
 	def __init__(self, valor, correcta):
@@ -626,3 +632,21 @@ class Pregunta:
 				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(1-q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(1-q)) + mu, 4)) + ')$', False))
 				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/np.sqrt(q)) + mu, 4)) + ',' + str(round((sigma/np.sqrt(q)) + mu, 4)) + ')$', False))
 				self.opcionestex.append(Respuesta('$(' + str(round((-sigma/(1-q)) + mu, 4)) + ',' + str(round((sigma/(1-q)) + mu, 4)) + ')$', False))
+		elif tipo == 48:
+			n = random.randint(2,6)
+			m = random.randint(4,8)*5
+			self.tex = 'Las llamadas para conexiones de entrada a un centro de computación llegan a un ritmo promedio de ' + str(n) + ' por minuto. Las llamadas siguen una distribución de Poisson. Si llega una llamada al principio de un intervalo de un minuto, ¿cuál es la probabilidad de que una segunda llamada no llegue en los siguientes ' + str(m) + ' segundos?'
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(m/60, loc=0, scale=1/n), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(m/60, loc=0, scale=1/n), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(1 - st.expon.cdf(m/60, loc=0, scale=n), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(st.expon.cdf(m/60, loc=0, scale=n), 4)), False))
+		elif tipo == 49:
+			mu = random.randint(1,5)/50
+			s = random.randint(1,5)/50
+			self.tex = 'Una planta de producción fabrica bombillas con probabilidad $Y$ de ser defectuosas. La supervisora de la planta no conoce $Y$, pero de experiencia pasada ella espera que esta probabilidad sea ' + str(mu*100) + '\\%. Más aún, ella calcula que su estimación debe tener una desviación estándar de ' + str(s*100) + '\\%. Si $Y$ se desea modelar con una distribución beta, ¿qué parámetros de deben usar para que sean consistentes con las estimaciones de la supervisora?'
+			a = round(((mu**2) - (mu**3))/(s**2) - mu, 4)
+			b = round(((mu**3) - 2*(mu**2) + mu)/(s**2) - (1-mu), 4)
+			self.opcionestex.append(Respuesta('$ \\alpha = ' + str(a) + '$, $\\beta = ' + str(b) + '$', True))
+			self.opcionestex.append(Respuesta('La información suministrada no es suficiente para encontrar los parámetros', False))
+			self.opcionestex.append(Respuesta('$ \\alpha = 1.0$, $\\beta = ' + str(round(1/mu - 1, 4)) + '$', False))
+			self.opcionestex.append(Respuesta('$ \\alpha = 1.0$, $\\beta = ' + str(round(1/(1 - s**2) - 1, 4)) + '$', False))
