@@ -155,6 +155,9 @@ class Tipo:
 		elif tipo == 49:
 			self.seccion = '4.7'
 			self.numero = 'Adicional'
+		elif tipo == 50:
+			self.seccion = '4.6'
+			self.numero = '4.109'
 class Respuesta:
 	"""docstring for Respuesta"""
 	def __init__(self, valor, correcta):
@@ -650,3 +653,13 @@ class Pregunta:
 			self.opcionestex.append(Respuesta('La información suministrada no es suficiente para encontrar los parámetros', False))
 			self.opcionestex.append(Respuesta('$ \\alpha = 1.0$, $\\beta = ' + str(round(1/mu - 1, 4)) + '$', False))
 			self.opcionestex.append(Respuesta('$ \\alpha = 1.0$, $\\beta = ' + str(round(1/(1 - s**2) - 1, 4)) + '$', False))
+		elif tipo == 50:
+			a = random.randint(1,5)
+			b = random.randint(1,5)
+			s = random.randint(25,50)
+			t = random.randint(2,5)
+			self.tex = 'El tiempo improductivo por semana $Y$ (en horas) de una máquina industrial tiene aproximadamente una distribución gamma con $\\alpha = ' + str(a) + ' $ y $\\beta = ' + str(b) + ' $. La pérdida $L$ (en dólares) para la operación industrial como resultado de este tiempo improductivo está dada por $L = ' + str(s) + 'Y + ' + str(t) + 'Y^2$. Encuentre el valor esperado $L$.'  
+			self.opcionestex.append(Respuesta(str(round(s*st.gamma.mean(a, loc=0, scale=b) + t*st.gamma.moment(2, a, loc=0, scale=b), 4)), True))
+			self.opcionestex.append(Respuesta(str(round(s*st.gamma.mean(a, loc=0, scale=b) + t*(st.gamma.mean(a, loc=0, scale=b)**2), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(s*st.gamma.mean(a, loc=0, scale=b) + (t**2)*st.gamma.moment(2, a, loc=0, scale=b), 4)), False))
+			self.opcionestex.append(Respuesta(str(round(s*st.gamma.mean(a, loc=0, scale=b) + (t**2)*(st.gamma.moment(2, a, loc=0, scale=b)**2), 4)), False))
